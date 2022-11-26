@@ -128,6 +128,11 @@
 #include "../usermods/Si7021_MQTT_HA/usermod_si7021_mqtt_ha.h"
 #endif
 
+#ifdef USERMOD_PWM_OUTPUTS
+#include "../usermods/pwm_outputs/usermod_pwm_outputs.h"
+#endif
+
+
 void registerUsermods()
 {
 /*
@@ -242,5 +247,9 @@ void registerUsermods()
   
   #ifdef USERMOD_SI7021_MQTT_HA
   usermods.add(new Si7021_MQTT_HA());
+  #endif
+
+  #ifdef USERMOD_PWM_OUTPUTS
+  usermods.add(new PwmOutputsUsermod());
   #endif
 }
