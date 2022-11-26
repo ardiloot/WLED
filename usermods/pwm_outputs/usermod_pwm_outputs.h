@@ -12,7 +12,7 @@ class PwmOutput {
     PwmOutput() { }
 
     PwmOutput(int8_t pin, uint32_t freq) : pin_(pin), freq_(freq) {
-      DEBUG_PRINTF("pwm_output[%d]: setup at freq %f", pin_, freq_);
+      DEBUG_PRINTF("pwm_output[%d]: setup at freq %d\n", pin_, freq_);
       open();
     }
     
@@ -21,7 +21,7 @@ class PwmOutput {
     }
     
     void setDuty(const float duty) {
-      DEBUG_PRINTF("pwm_output[%d]: set duty %f", pin_, duty);
+      DEBUG_PRINTF("pwm_output[%d]: set duty %f\n", pin_, duty);
       if (!enabled_) {
         return;
       }
@@ -51,7 +51,7 @@ class PwmOutput {
     float duty_ {-1.0f}; // Unknown duty
 
     void open() {
-      DEBUG_PRINTF("pwm_output[%d]: open...", pin_);
+      DEBUG_PRINTF("pwm_output[%d]: open...\n", pin_);
       if (enabled_)
         return;
 
@@ -61,19 +61,19 @@ class PwmOutput {
       
       channel_ = pinManager.allocateLedc(1);
       if (channel_ == 255) {
-        DEBUG_PRINTF("pwm_output[%d]: failed to quire ledc", pin_);
+        DEBUG_PRINTF("pwm_output[%d]: failed to quire ledc\n", pin_);
         pinManager.deallocatePin(pin_, PinOwner::UM_PWM_OUTPUTS);
         return;
       }
 
       ledcSetup(channel_, freq_, bit_depth_);
       ledcAttachPin(pin_, channel_);
-      DEBUG_PRINTF("pwm_output[%d]: open successful", pin_);
+      DEBUG_PRINTF("pwm_output[%d]: open successful\n", pin_);
       enabled_ = true;
     }
 
     void close() {
-      DEBUG_PRINTF("pwm_output[%d]: close", pin_);
+      DEBUG_PRINTF("pwm_output[%d]: close\n", pin_);
       if (!enabled_)
         return;
       pinManager.deallocatePin(pin_, PinOwner::UM_PWM_OUTPUTS);
